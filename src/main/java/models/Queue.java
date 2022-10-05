@@ -1,6 +1,6 @@
 package models;
 
-import DAO.QueuesDAO.MemorizedResponsibles;
+import DAO.QueuesDAO.QueueResponsibles;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,5 +11,5 @@ public class Queue {
     private int queueId;
     private String name;
     private int topCount;
-    private MemorizedResponsibles responsibles;
+    private QueueResponsibles responsibles;
 }

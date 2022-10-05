@@ -12,11 +12,11 @@ import java.util.Set;
 
 
 public class QueuesDAO implements DAO<Queue> {
-    public static class MemorizedResponsibles {
+    public static class QueueResponsibles {
         private final Set<Person> responsibles;
         private final HashSet<Person> removed;
         private final HashSet<Person> added;
-        public MemorizedResponsibles(Set<Person> responsibles) {
+        public QueueResponsibles(Set<Person> responsibles) {
             removed = new HashSet<>();
             added = new HashSet<>();
             this.responsibles = responsibles;
@@ -27,12 +27,10 @@ public class QueuesDAO implements DAO<Queue> {
         }
 
         public void add(Person person) {
-            responsibles.add(person);
             added.add(person);
         }
 
         public void remove(Person person) {
-            responsibles.remove(person);
             removed.add(person);
         }
 
@@ -66,13 +64,13 @@ public class QueuesDAO implements DAO<Queue> {
                 responsiblesSet.add(personsDAO.get(responsiblesResultSet.getInt("person_id")));
             }
         }
-        MemorizedResponsibles memorizedResponsibles = new MemorizedResponsibles(responsiblesSet);
+        QueueResponsibles queueResponsibles = new QueueResponsibles(responsiblesSet);
 
         return Queue.builder()
                 .queueId(rs.getInt("queue_id"))
                 .name(rs.getString("name"))
                 .topCount(rs.getInt("top_count"))
-                .responsibles(memorizedResponsibles)
+                .responsibles(queueResponsibles)
                 .build();
     }
 
