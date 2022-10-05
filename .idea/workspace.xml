@@ -5,28 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cc05c30-4678-4952-93da-12c9775c424c" name="Changes" comment="Data models and DAO's for all tables except status_transitions (not tested yet)">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/CommentsDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/PersonsDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/QueuesDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/StatusesDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/TicketsDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DataSourceCreator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DbInitListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/models/Comment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/models/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/models/Queue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/models/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/models/StatusTransition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/models/Ticket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/dbconfig.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/QueuesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/QueuesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Queue.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +83,14 @@
       <option name="presentableId" value="Default" />
       <updated>1664060184904</updated>
     </task>
+    <task id="LOCAL-00001" summary="Data models and DAO's for all tables except status_transitions (not tested yet)">
+      <created>1664932391868</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1664932391868</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
