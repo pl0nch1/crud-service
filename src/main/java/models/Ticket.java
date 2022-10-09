@@ -2,14 +2,15 @@ package models;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 @Builder
 public class Ticket {
     private int ticketId;
-    private String title;
+    @NonNull private String title;
     private String description;
-    private Status currentStatus;
+    @NonNull private Status currentStatus;
     private short priority;
-    private Queue queue;
+    @NonNull private Queue queue;
 }

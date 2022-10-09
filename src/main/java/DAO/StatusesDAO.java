@@ -1,5 +1,7 @@
 package DAO;
 
+import DAO.intefaces.Modifiable;
+import DAO.intefaces.Readable;
 import models.Status;
 
 import javax.sql.DataSource;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StatusesDAO implements DAO<Status> {
+public class StatusesDAO implements Readable<Status>, Modifiable<Status> {
     private final DataSource ds;
 
     public StatusesDAO(DataSource ds){
@@ -65,7 +67,10 @@ public class StatusesDAO implements DAO<Status> {
              PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            return getFromResultSet(rs);
+            if (rs.next())
+                return getFromResultSet(rs);
+            else
+                return null;
         }
     }
 
