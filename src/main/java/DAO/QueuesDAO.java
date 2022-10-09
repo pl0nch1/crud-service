@@ -1,5 +1,8 @@
 package DAO;
 
+import DAO.intefaces.Modifiable;
+import DAO.intefaces.Readable;
+import lombok.NonNull;
 import models.Person;
 import models.Queue;
 
@@ -11,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class QueuesDAO implements DAO<Queue> {
+public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
     public static class MemorizedResponsibles {
         private final Set<Person> responsibles;
         private final HashSet<Person> removed;
@@ -26,22 +29,22 @@ public class QueuesDAO implements DAO<Queue> {
             return responsibles;
         }
 
-        public void add(Person person) {
+        public void add(@NonNull Person person) {
             responsibles.add(person);
             added.add(person);
         }
 
-        public void remove(Person person) {
+        public void remove(@NonNull Person person) {
             responsibles.remove(person);
             removed.add(person);
         }
 
         public HashSet<Person> getAdded() {
-            return removed;
+            return added;
         }
 
         public HashSet<Person> getRemoved() {
-            return added;
+            return removed;
         }
 
         private void clearHistory() {
@@ -87,12 +90,15 @@ public class QueuesDAO implements DAO<Queue> {
 
     @Override
     public Queue get(int id) throws SQLException {
-        String query = "SELECT * FROM queues WHERE person_id = ?";
+        String query = "SELECT * FROM queues WHERE queue_id = ?";
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            return getFromResultSet(rs, connection);
+            if (rs.next())
+                return getFromResultSet(rs, connection);
+            else
+                return null;
         }
     }
 
@@ -137,32 +143,30 @@ public class QueuesDAO implements DAO<Queue> {
         String removeSql = "DELETE FROM queue_responsibles WHERE queue_id = ? AND person_id = ?";
 
         try (PreparedStatement removeStatement = connection.prepareStatement(removeSql)) {
-            obj.getResponsibles().getRemoved().stream()
-                    .map(Person::getPersonId)
-                    .forEach((personId) -> {
-                        try {
-                            removeStatement.setInt(1, obj.getQueueId());
-                            removeStatement.setInt(2, personId);
-                            removeStatement.addBatch();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+            for (Person person: obj.getResponsibles().getRemoved()) {
+                int personId = person.getPersonId();
+                try {
+                    removeStatement.setInt(1, obj.getQueueId());
+                    removeStatement.setInt(2, personId);
+                    removeStatement.addBatch();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             removeStatement.executeBatch();
         }
 
         try (PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
-            obj.getResponsibles().getAdded().stream()
-                    .map(Person::getPersonId)
-                    .forEach((personId) -> {
-                        try {
-                            insertStatement.setInt(1, obj.getQueueId());
-                            insertStatement.setInt(2, personId);
-                            insertStatement.addBatch();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+            for (Person person: obj.getResponsibles().getAdded()) {
+                int personId = person.getPersonId();
+                try {
+                    insertStatement.setInt(1, obj.getQueueId());
+                    insertStatement.setInt(2, personId);
+                    insertStatement.addBatch();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             insertStatement.executeBatch();
         }
 

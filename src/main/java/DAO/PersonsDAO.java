@@ -1,7 +1,8 @@
 package DAO;
 
+import DAO.intefaces.Modifiable;
+import DAO.intefaces.Readable;
 import models.Person;
-import models.Status;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PersonsDAO implements DAO<Person> {
+public class PersonsDAO implements Readable<Person>, Modifiable<Person> {
     private final DataSource ds;
 
     public PersonsDAO(DataSource ds){
@@ -72,7 +73,10 @@ public class PersonsDAO implements DAO<Person> {
              PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            return getFromResultSet(rs);
+            if (rs.next())
+                return getFromResultSet(rs);
+            else
+                return null;
         }
     }
 

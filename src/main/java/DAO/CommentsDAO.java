@@ -1,7 +1,8 @@
 package DAO;
 
+import DAO.intefaces.Modifiable;
+import DAO.intefaces.Readable;
 import models.Comment;
-import models.Person;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CommentsDAO implements DAO<Comment> {
+public class CommentsDAO implements Readable<Comment>, Modifiable<Comment> {
     private final DataSource ds;
     private final PersonsDAO personsDAO;
     private final TicketsDAO ticketsDAO;
@@ -79,7 +80,10 @@ public class CommentsDAO implements DAO<Comment> {
              PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            return getFromResultSet(rs);
+            if (rs.next())
+                return getFromResultSet(rs);
+            else
+                return null;
         }
     }
 
@@ -95,8 +99,8 @@ public class CommentsDAO implements DAO<Comment> {
 
     @Override
     public int save(Comment obj) throws SQLException {
-        ticketsDAO.save(obj.getTicket());
-        personsDAO.save(obj.getAuthor());
+        obj.getTicket().setTicketId(ticketsDAO.save(obj.getTicket()));
+        obj.getAuthor().setPersonId(personsDAO.save(obj.getAuthor()));
         if (obj.getCommentId() == 0) {
             return insert(obj);
         } else {

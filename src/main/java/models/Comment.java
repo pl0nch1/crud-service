@@ -2,6 +2,7 @@ package models;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.sql.Time;
 
@@ -9,8 +10,8 @@ import java.sql.Time;
 @Data
 public class Comment {
     private int commentId;
-    private Ticket ticket;
-    private Time creationTime;
+    @NonNull private Ticket ticket;
+    @NonNull private Time creationTime;
     private String contents;
     private Person author;
 

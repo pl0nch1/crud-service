@@ -1,6 +1,7 @@
 package DAO;
 
-import models.Status;
+import DAO.intefaces.Modifiable;
+import DAO.intefaces.Readable;
 import models.Ticket;
 
 import javax.sql.DataSource;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TicketsDAO implements DAO<Ticket> {
+public class TicketsDAO implements Readable<Ticket>, Modifiable<Ticket> {
     private final DataSource ds;
     private final QueuesDAO queuesDAO;
     private final StatusesDAO statusesDAO;
@@ -28,7 +29,7 @@ public class TicketsDAO implements DAO<Ticket> {
                 .description(rs.getString("description"))
                 .priority(rs.getShort("priority"))
                 .queue(queuesDAO.get(rs.getInt("queue_id")))
-                .currentStatus(statusesDAO.get(rs.getShort("status_id")))
+                .currentStatus(statusesDAO.get(rs.getShort("current_status_id")))
                 .build();
     }
 
@@ -83,13 +84,16 @@ public class TicketsDAO implements DAO<Ticket> {
              PreparedStatement statement = connection.prepareStatement(query)){
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            return getFromResultSet(rs);
+            if (rs.next())
+                return getFromResultSet(rs);
+            else
+                return null;
         }
     }
 
     @Override
     public List<Ticket> list() throws SQLException {
-        String query = "SELECT * FROM statuses";
+        String query = "SELECT * FROM tickets";
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){
             ResultSet rs = statement.executeQuery();
@@ -99,8 +103,8 @@ public class TicketsDAO implements DAO<Ticket> {
 
     @Override
     public int save(Ticket obj) throws SQLException {
-        statusesDAO.save(obj.getCurrentStatus());
-        queuesDAO.save(obj.getQueue());
+        obj.getCurrentStatus().setStatusId((short) statusesDAO.save(obj.getCurrentStatus()));
+        obj.getQueue().setQueueId(queuesDAO.save(obj.getQueue()));
         if (obj.getTicketId() == 0) {
             return insert(obj);
         } else {
