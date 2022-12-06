@@ -4,28 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9cc05c30-4678-4952-93da-12c9775c424c" name="Changes" comment="ready for work DAO v 1.0">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/CreateCommentServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DeleteTicketServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/EditTicketServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/QueueServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/createQueue.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/editTicket.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/index.jsp" afterDir="false" />
+    <list default="true" id="9cc05c30-4678-4952-93da-12c9775c424c" name="Changes" comment="tickets dashboard, ticket edit and view, queue creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreateTicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreateTicketServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/PersonsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/PersonsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/QueuesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/QueuesDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/StatusTransitionsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/StatusTransitionsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/TicketsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/TicketsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/IndexServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IndexServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/models/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Ticket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/LoggerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/LoggerUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/createTicket.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/createTicket.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/CommentsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/CommentsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EditTicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EditTicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/editTicket.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/editTicket.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +25,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -120,7 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665324352797</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="tickets dashboard, ticket edit and view, queue creation">
+      <created>1670353366899</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1670353366899</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,6 +128,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Data models and DAO's for all tables except status_transitions (not tested yet)" />
     <MESSAGE value="ready for work DAO v 1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="ready for work DAO v 1.0" />
+    <MESSAGE value="tickets dashboard, ticket edit and view" />
+    <MESSAGE value="tickets dashboard, ticket edit and view, queue creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="tickets dashboard, ticket edit and view, queue creation" />
   </component>
 </project>

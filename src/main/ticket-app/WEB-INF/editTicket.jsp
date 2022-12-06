@@ -2,6 +2,7 @@
 <%@page import="models.Ticket"%>
 <%@page import="models.Status"%>
 <%@page import="models.StatusTransition"%>
+<%@page import="models.Comments"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -71,5 +72,27 @@
             </tr>
         </c:forEach>
     </table>
+
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Author</th>
+            <th>Contents</th>
+        </tr>
+        <c:forEach var="comment" items="${comments}">
+            <tr>
+                <td>
+                    <c:out value="${comment.getCreationTime()}"></c:out>
+                </td>
+                <td>
+                    <c:out value="${comment.getAuthor().getName()}"></c:out>
+                </td>
+                <td>
+                    <c:out value="${comment.getContents()}"></c:out>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+
     <a href='/BD1-1/dashboard'>На главную</a>
 </html>

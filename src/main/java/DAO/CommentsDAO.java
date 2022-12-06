@@ -89,9 +89,19 @@ public class CommentsDAO implements Readable<Comment>, Modifiable<Comment> {
 
     @Override
     public List<Comment> list() throws SQLException {
-        String query = "SELECT * FROM persons";
+        String query = "SELECT * FROM comments";
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){
+            ResultSet rs = statement.executeQuery();
+            return getListFromResultSet(rs);
+        }
+    }
+
+    public List<Comment> listByTicketId(int tickedId) throws SQLException {
+        String query = "SELECT * FROM comments WHERE ticket_id = ? ORDER BY creation_time DESC";
+        try (Connection connection = ds.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setInt(1, tickedId);
             ResultSet rs = statement.executeQuery();
             return getListFromResultSet(rs);
         }

@@ -1,12 +1,6 @@
-import DAO.QueuesDAO;
-import DAO.StatusTransitionsDAO;
-import DAO.StatusesDAO;
-import DAO.TicketsDAO;
+import DAO.*;
 import jdk.swing.interop.SwingInterOpUtils;
-import models.Queue;
-import models.Status;
-import models.StatusTransition;
-import models.Ticket;
+import models.*;
 import utils.LoggerUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -42,15 +36,18 @@ public class EditTicketServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TicketsDAO ticketsDAO = (TicketsDAO) getServletContext().getAttribute("ticketsDAO");
         StatusesDAO statusesDAO = (StatusesDAO) getServletContext().getAttribute("statusesDAO");
+        CommentsDAO commentsDAO = (CommentsDAO) getServletContext().getAttribute("commentsDAO");
         StatusTransitionsDAO statusTransitionsDAO = (StatusTransitionsDAO) getServletContext().getAttribute("statusTransitionsDAO");
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/editTicket.jsp");
         try {
             Ticket ticket = ticketsDAO.getByFullName(req.getParameter("ticket_name"));
             List<Status> statuses = statusesDAO.list();
             List<StatusTransition> transitions = statusTransitionsDAO.listByTicketId(ticket.getTicketId());
+            List<Comment> comments = commentsDAO.listByTicketId(ticket.getTicketId());
             req.setAttribute("statuses", statuses);
             req.setAttribute("ticket", ticket);
             req.setAttribute("transitions", transitions);
+            req.setAttribute("comments", comments);
             dispatcher.forward(req, resp);
         }
         catch (SQLException exception)
