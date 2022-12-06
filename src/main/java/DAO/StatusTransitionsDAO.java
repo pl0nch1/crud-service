@@ -1,6 +1,5 @@
 package DAO;
 
-import DAO.intefaces.Modifiable;
 import DAO.intefaces.Readable;
 import models.StatusTransition;
 import models.Ticket;
@@ -53,6 +52,16 @@ public class StatusTransitionsDAO implements Readable<StatusTransition> {
                 return getFromResultSet(rs);
             else
                 return null;
+        }
+    }
+
+    public List<StatusTransition> listByTicketId(int id) throws SQLException {
+        String query = "SELECT * FROM status_transitions WHERE ticket_id = ? ORDER BY transition_time DESC";
+        try (Connection connection = ds.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            return getListFromResultSet(rs);
         }
     }
 

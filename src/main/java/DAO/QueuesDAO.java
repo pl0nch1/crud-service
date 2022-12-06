@@ -88,6 +88,19 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
         return list;
     }
 
+    public Queue getByName(String name) throws SQLException {
+        String query = "SELECT * FROM queues WHERE name = ?";
+        try (Connection connection = ds.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next())
+                return getFromResultSet(rs, connection);
+            else
+                return null;
+        }
+    }
+
     @Override
     public Queue get(int id) throws SQLException {
         String query = "SELECT * FROM queues WHERE queue_id = ?";
@@ -184,7 +197,9 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
                 result = update(obj, connection);
             }
 
-            updateResponsibles(obj, connection);
+            if (obj.getResponsibles() != null) {
+                updateResponsibles(obj, connection);
+            }
             connection.commit();
 
             return result;
@@ -197,7 +212,7 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
-            statement.executeUpdate(query);
+            statement.executeUpdate();
         }
     }
 }

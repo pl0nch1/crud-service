@@ -13,4 +13,5 @@ public class Ticket {
     @NonNull private Status currentStatus;
     private short priority;
     @NonNull private Queue queue;
+    private int localTicketId;
 }

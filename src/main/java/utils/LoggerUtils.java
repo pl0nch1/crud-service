@@ -11,7 +11,7 @@ public class LoggerUtils {
     public static Logger tryGetFileLogger(String loggerName, String localPath, Level level) {
         Logger logger = Logger.getLogger(loggerName);
         logger.setLevel(level);
-        logger.setUseParentHandlers(false);
+        // logger.setUseParentHandlers(false);
         try {
             FileHandler handler = new FileHandler("%t" + localPath, true);
             handler.setFormatter(new OneLineFormatter());

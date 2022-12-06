@@ -29,6 +29,7 @@ public class TicketsDAO implements Readable<Ticket>, Modifiable<Ticket> {
                 .description(rs.getString("description"))
                 .priority(rs.getShort("priority"))
                 .queue(queuesDAO.get(rs.getInt("queue_id")))
+                .localTicketId(rs.getInt("local_ticket_id"))
                 .currentStatus(statusesDAO.get(rs.getShort("current_status_id")))
                 .build();
     }
@@ -58,7 +59,7 @@ public class TicketsDAO implements Readable<Ticket>, Modifiable<Ticket> {
     }
 
     private int insert(Ticket obj) throws SQLException{
-        String query = "INSERT INTO tickets (title, description, priority, queue_id, current_status_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO tickets (title, description, priority, queue_id, current_status_id, local_ticket_id) VALUES (?, ?, ?, ?, ?, ?)";
         int id = 0;
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -67,7 +68,10 @@ public class TicketsDAO implements Readable<Ticket>, Modifiable<Ticket> {
             statement.setInt(3, obj.getPriority());
             statement.setInt(4, obj.getQueue().getQueueId());
             statement.setShort(5, obj.getCurrentStatus().getStatusId());
+            int localId = obj.getQueue().getTopCount();
+            statement.setInt(6, localId);
             statement.executeUpdate();
+            obj.setLocalTicketId(localId);
             ResultSet rs = statement.getGeneratedKeys();
             if (rs != null && rs.next()) {
                 id = rs.getInt(1);
@@ -75,6 +79,23 @@ public class TicketsDAO implements Readable<Ticket>, Modifiable<Ticket> {
             }
         }
         return id;
+    }
+
+    public Ticket getByFullName(String name) throws SQLException {
+        String queueName = name.split("-")[0];
+        int queueId = queuesDAO.getByName(queueName).getQueueId();
+        int localId = Integer.parseInt(name.split("-")[1]);
+        String query = "SELECT * FROM tickets WHERE local_ticket_id = ? AND queue_id = ?";
+        try (Connection connection = ds.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setInt(1, localId);
+            statement.setInt(2, queueId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next())
+                return getFromResultSet(rs);
+            else
+                return null;
+        }
     }
 
     @Override
@@ -93,7 +114,7 @@ public class TicketsDAO implements Readable<Ticket>, Modifiable<Ticket> {
 
     @Override
     public List<Ticket> list() throws SQLException {
-        String query = "SELECT * FROM tickets";
+        String query = "SELECT * FROM tickets ORDER BY priority DESC";
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){
             ResultSet rs = statement.executeQuery();
@@ -117,7 +138,8 @@ public class TicketsDAO implements Readable<Ticket>, Modifiable<Ticket> {
         String query = "DELETE FROM tickets WHERE ticket_id = ?";
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.executeUpdate(query);
+            statement.setInt(1, id);
+            statement.executeUpdate();
         }
     }
 }

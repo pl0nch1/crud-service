@@ -105,7 +105,7 @@ public class PersonsDAO implements Readable<Person>, Modifiable<Person> {
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
-            statement.executeUpdate(query);
+            statement.executeUpdate();
         }
     }
 }
