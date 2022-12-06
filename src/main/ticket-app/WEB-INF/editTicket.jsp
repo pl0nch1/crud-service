@@ -2,7 +2,7 @@
 <%@page import="models.Ticket"%>
 <%@page import="models.Status"%>
 <%@page import="models.StatusTransition"%>
-<%@page import="models.Comments"%>
+<%@page import="models.Comment"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -72,6 +72,8 @@
             </tr>
         </c:forEach>
     </table>
+    <hr>
+    <h3>Комменатрии</h3>
 
     <table>
         <tr>
@@ -85,7 +87,7 @@
                     <c:out value="${comment.getCreationTime()}"></c:out>
                 </td>
                 <td>
-                    <c:out value="${comment.getAuthor().getName()}"></c:out>
+                    <c:out value="${comment.getAuthor().getLastName()} ${comment.getAuthor().getFirstName()}"></c:out>
                 </td>
                 <td>
                     <c:out value="${comment.getContents()}"></c:out>
@@ -93,6 +95,26 @@
             </tr>
         </c:forEach>
     </table>
+
+    <form action="/BD1-1/comments/create" method="post">
+        <input type="text" name="full_name" value="${ticket.getQueue().getName()}-${ticket.getLocalTicketId()}" hidden>
+        <div class="form-example">
+             <label for="status">Author </label>
+             <select name="person_id" id="person_id">
+               <c:forEach var="person" items="${persons}">
+                   <option type="text" value="${person.getPersonId()}">
+                       <c:out value="${person.getLastName()} ${person.getFirstName()}"/>
+                   </option>
+               </c:forEach>
+             </select>
+        </div>
+
+        <div class="form-example">
+            <input type="text" name="contents" id="contents">
+        </div>
+
+        <input type="submit" value="Post comment">
+    </form>
 
     <a href='/BD1-1/dashboard'>На главную</a>
 </html>

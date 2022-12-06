@@ -37,6 +37,7 @@ public class EditTicketServlet extends HttpServlet {
         TicketsDAO ticketsDAO = (TicketsDAO) getServletContext().getAttribute("ticketsDAO");
         StatusesDAO statusesDAO = (StatusesDAO) getServletContext().getAttribute("statusesDAO");
         CommentsDAO commentsDAO = (CommentsDAO) getServletContext().getAttribute("commentsDAO");
+        PersonsDAO personsDAO = (PersonsDAO) getServletContext().getAttribute("personsDAO");
         StatusTransitionsDAO statusTransitionsDAO = (StatusTransitionsDAO) getServletContext().getAttribute("statusTransitionsDAO");
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/editTicket.jsp");
         try {
@@ -44,10 +45,12 @@ public class EditTicketServlet extends HttpServlet {
             List<Status> statuses = statusesDAO.list();
             List<StatusTransition> transitions = statusTransitionsDAO.listByTicketId(ticket.getTicketId());
             List<Comment> comments = commentsDAO.listByTicketId(ticket.getTicketId());
+            List<Person> persons = personsDAO.list();
             req.setAttribute("statuses", statuses);
             req.setAttribute("ticket", ticket);
             req.setAttribute("transitions", transitions);
             req.setAttribute("comments", comments);
+            req.setAttribute("persons", persons);
             dispatcher.forward(req, resp);
         }
         catch (SQLException exception)

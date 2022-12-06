@@ -1,10 +1,6 @@
-import DAO.QueuesDAO;
-import DAO.StatusTransitionsDAO;
-import DAO.StatusesDAO;
-import DAO.TicketsDAO;
-import models.Status;
-import models.StatusTransition;
-import models.Ticket;
+import DAO.*;
+import models.*;
+import org.apache.tomcat.jni.Time;
 import utils.LoggerUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -15,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,26 +35,29 @@ public class CreateCommentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        QueuesDAO queuesDAO = (QueuesDAO) getServletContext().getAttribute("queuesDAO");
+        CommentsDAO commentsDAO = (CommentsDAO) getServletContext().getAttribute("commentsDAO");
+        PersonsDAO personsDAO = (PersonsDAO) getServletContext().getAttribute("personsDAO");
         TicketsDAO ticketsDAO = (TicketsDAO) getServletContext().getAttribute("ticketsDAO");
-        StatusesDAO statusesDAO = (StatusesDAO) getServletContext().getAttribute("statusesDAO");
+        String ticket_name = req.getParameter("full_name");
         try {
-            Ticket ticket = ticketsDAO.getByFullName(req.getParameter("full_name"));
-            String title = req.getParameter("title");
-            String description = req.getParameter("description");
-            short priority = Short.parseShort(req.getParameter("priority"));
-            Status status = statusesDAO.get(Integer.parseInt(req.getParameter("status")));
-            ticket.setCurrentStatus(status);
-            ticket.setDescription(description);
-            ticket.setTitle(title);
-            ticket.setPriority(priority);
-            ticketsDAO.save(ticket);
+            String content = req.getParameter("contents");
+            Person person = personsDAO.get(Integer.parseInt(req.getParameter("person_id")));
+            logger.info(person.toString());
+            logger.info(req.getParameter("person_id"));
+            Ticket ticket = ticketsDAO.getByFullName(ticket_name);
+            Comment comment = Comment.builder()
+                    .creationTime(new java.sql.Time(System.currentTimeMillis()))
+                    .author(person)
+                    .contents(content)
+                    .ticket(ticket)
+                    .build();
+
+            commentsDAO.save(comment);
+            resp.sendRedirect(req.getContextPath() + "/tickets/edit?ticket_name=" + ticket_name);
         }
         catch (SQLException exception)
         {
             logger.throwing("EditTicketServlet", "doPost", exception);
-        }
-        finally {
             resp.sendRedirect(req.getContextPath() + "/dashboard");
         }
     }

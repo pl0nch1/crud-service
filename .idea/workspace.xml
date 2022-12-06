@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cc05c30-4678-4952-93da-12c9775c424c" name="Changes" comment="tickets dashboard, ticket edit and view, queue creation">
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/CommentsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/CommentsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CreateCommentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreateCommentServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/EditTicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EditTicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Queue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/editTicket.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ticket-app/WEB-INF/editTicket.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,6 +28,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/DAO/CommentsDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/DAO/PersonsDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/DAO/QueuesDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/DAO/StatusTransitionsDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/models/Person.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/models/Queue.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/models/Ticket.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
