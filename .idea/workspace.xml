@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9cc05c30-4678-4952-93da-12c9775c424c" name="Changes" comment="fix comments add">
-      <change afterPath="$PROJECT_DIR$/DDL" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="9cc05c30-4678-4952-93da-12c9775c424c" name="Changes" comment="db backup" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,11 +57,11 @@
       <recent name="C:\Users\pivor\Documents\IdeaProjects\BD1\src\main\ticket-app\WEB-INF" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pivor\Documents\IdeaProjects\BD1" />
       <recent name="C:\Users\pivor\Documents\IdeaProjects\BD1\src\main\ticket-app\WEB-INF" />
       <recent name="C:\Users\pivor\Documents\IdeaProjects\BD1\src\main\ticket-app" />
       <recent name="C:\Users\pivor\Documents\IdeaProjects\BD1\src\main\resources" />
       <recent name="C:\Users\pivor\Documents\IdeaProjects\BD1\src\main\java" />
-      <recent name="C:\Users\pivor\Documents\IdeaProjects\BD1\src\main\cards-app\WEB-INF" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
@@ -125,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670368408720</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="db backup">
+      <created>1670374685961</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1670374685961</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -145,6 +149,7 @@
     <MESSAGE value="tickets dashboard, ticket edit and view" />
     <MESSAGE value="tickets dashboard, ticket edit and view, queue creation" />
     <MESSAGE value="fix comments add" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix comments add" />
+    <MESSAGE value="db backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="db backup" />
   </component>
 </project>
