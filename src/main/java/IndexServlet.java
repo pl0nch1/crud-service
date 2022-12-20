@@ -26,7 +26,7 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     public void init() {
-        this.logger = LoggerUtils.tryGetFileLogger("IndexServlet", "/index.log", Level.FINER);
+        this.logger = LoggerUtils.tryGetFileLogger("IndexServlet", "/index.log", Level.FINEST);
     }
 
     @Override
@@ -36,16 +36,21 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("visited");
         ServletContext context = req.getServletContext();
+        logger.info("visited1");
         RequestDispatcher dispatcher = context.getRequestDispatcher("/WEB-INF/index.jsp");
+        logger.info("visited2");
         TicketsDAO ticketsDAO = (TicketsDAO) context.getAttribute("ticketsDAO");
+        logger.info("visited3");
 
         try {
             List<Ticket> tickets = ticketsDAO.list();
             req.setAttribute("tickets", tickets);
+            logger.info("visited");
             dispatcher.forward(req, resp);
         } catch (SQLException e) {
-            logger.throwing("IndexServlet", "doGet", e);
+            logger.info(e.toString());
         }
     }
 }

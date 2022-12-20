@@ -15,74 +15,23 @@ import java.util.Set;
 
 
 public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
-    public static class MemorizedResponsibles {
-        private final Set<Person> responsibles;
-        private final HashSet<Person> removed;
-        private final HashSet<Person> added;
-        public MemorizedResponsibles(Set<Person> responsibles) {
-            removed = new HashSet<>();
-            added = new HashSet<>();
-            this.responsibles = responsibles;
-        }
-
-        public Set<Person> getSet() {
-            return responsibles;
-        }
-
-        public void add(@NonNull Person person) {
-            responsibles.add(person);
-            added.add(person);
-        }
-
-        public void remove(@NonNull Person person) {
-            responsibles.remove(person);
-            removed.add(person);
-        }
-
-        public HashSet<Person> getAdded() {
-            return added;
-        }
-
-        public HashSet<Person> getRemoved() {
-            return removed;
-        }
-
-        private void clearHistory() {
-            removed.clear();
-            added.clear();
-        }
-    }
     private final DataSource ds;
-    private final PersonsDAO personsDAO;
-    public QueuesDAO(DataSource ds, PersonsDAO personsDAO){
+    public QueuesDAO(DataSource ds){
         this.ds = ds;
-        this.personsDAO = personsDAO;
     }
 
-    private Queue getFromResultSet(ResultSet rs, Connection connection) throws SQLException {
-        String responsiblesQuery = "SELECT * FROM queue_responsibles WHERE queue_id = ?";
-        Set<Person> responsiblesSet = new HashSet<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(responsiblesQuery)) {
-            preparedStatement.setInt(1, rs.getInt("queue_id"));
-            ResultSet responsiblesResultSet = preparedStatement.executeQuery();
-            while (responsiblesResultSet.next()) {
-                responsiblesSet.add(personsDAO.get(responsiblesResultSet.getInt("person_id")));
-            }
-        }
-        MemorizedResponsibles memorizedResponsibles = new MemorizedResponsibles(responsiblesSet);
-
+    private Queue getFromResultSet(ResultSet rs) throws SQLException {
         return Queue.builder()
                 .queueId(rs.getInt("queue_id"))
                 .name(rs.getString("name"))
                 .topCount(rs.getInt("top_count"))
-                .responsibles(memorizedResponsibles)
                 .build();
     }
 
-    private List<Queue> getListFromResultSet(ResultSet rs, Connection connection) throws SQLException {
+    private List<Queue> getListFromResultSet(ResultSet rs) throws SQLException {
         ArrayList<Queue> list = new ArrayList<>();
         while (rs.next()){
-            list.add(getFromResultSet(rs, connection));
+            list.add(getFromResultSet(rs));
         }
         rs.close();
         return list;
@@ -95,7 +44,7 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
             statement.setString(1, name);
             ResultSet rs = statement.executeQuery();
             if (rs.next())
-                return getFromResultSet(rs, connection);
+                return getFromResultSet(rs);
             else
                 return null;
         }
@@ -109,7 +58,7 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next())
-                return getFromResultSet(rs, connection);
+                return getFromResultSet(rs);
             else
                 return null;
         }
@@ -121,7 +70,7 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
         try (Connection connection = ds.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){
             ResultSet rs = statement.executeQuery();
-            return getListFromResultSet(rs, connection);
+            return getListFromResultSet(rs);
         }
     }
     private int update(Queue obj, Connection connection) throws SQLException{
@@ -150,41 +99,6 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
         }
         return id;
     }
-
-    private void updateResponsibles(Queue obj, Connection connection) throws SQLException {
-        String insertSql = "INSERT INTO queue_responsibles(queue_id, person_id) VALUES (?, ?)";
-        String removeSql = "DELETE FROM queue_responsibles WHERE queue_id = ? AND person_id = ?";
-
-        try (PreparedStatement removeStatement = connection.prepareStatement(removeSql)) {
-            for (Person person: obj.getResponsibles().getRemoved()) {
-                int personId = person.getPersonId();
-                try {
-                    removeStatement.setInt(1, obj.getQueueId());
-                    removeStatement.setInt(2, personId);
-                    removeStatement.addBatch();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            removeStatement.executeBatch();
-        }
-
-        try (PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
-            for (Person person: obj.getResponsibles().getAdded()) {
-                int personId = person.getPersonId();
-                try {
-                    insertStatement.setInt(1, obj.getQueueId());
-                    insertStatement.setInt(2, personId);
-                    insertStatement.addBatch();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            insertStatement.executeBatch();
-        }
-
-        obj.getResponsibles().clearHistory();
-    }
     @Override
     public int save(Queue obj) throws SQLException {
 
@@ -197,9 +111,6 @@ public class QueuesDAO implements Readable<Queue>, Modifiable<Queue> {
                 result = update(obj, connection);
             }
 
-            if (obj.getResponsibles() != null) {
-                updateResponsibles(obj, connection);
-            }
             connection.commit();
 
             return result;

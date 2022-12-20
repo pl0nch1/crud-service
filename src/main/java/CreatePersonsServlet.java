@@ -1,4 +1,6 @@
+import DAO.PersonsDAO;
 import DAO.QueuesDAO;
+import models.Person;
 import models.Queue;
 import utils.LoggerUtils;
 
@@ -9,23 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet("/queue")
-public class QueueServlet extends HttpServlet {
+@WebServlet("/person/create")
+public class CreatePersonsServlet extends HttpServlet {
     private Logger logger;
-    private QueuesDAO queuesDAO;
+    private PersonsDAO personsDAO;
 
     @Override
     public void init() {
         logger = LoggerUtils.tryGetFileLogger("CreateQueueServlet", "/index.log", Level.FINER);
-        queuesDAO = (QueuesDAO) getServletContext().getAttribute("queuesDAO");
+        personsDAO = (PersonsDAO) getServletContext().getAttribute("personsDAO");
     }
 
     @Override
@@ -35,22 +33,25 @@ public class QueueServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/createQueue.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/createPerson.jsp");
         dispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        QueuesDAO queuesDAO = (QueuesDAO) getServletContext().getAttribute("queuesDAO");
-        Queue queue = Queue.builder()
-                .name(req.getParameter("name"))
+        PersonsDAO personsDAO = (PersonsDAO) getServletContext().getAttribute("personsDAO");
+        Person person = Person.builder()
+                .firstName(req.getParameter("fname"))
+                .lastName(req.getParameter("lname"))
+                .mail(req.getParameter("mail"))
                 .build();
         try {
-            queuesDAO.save(queue);
+            personsDAO.save(person);
         } catch (SQLException e) {
             logger.throwing("", "", e);
         }
-
-        resp.sendRedirect(req.getContextPath() + "/dashboard");
+        finally{
+            resp.sendRedirect(req.getContextPath() + "/persons");
+        }
     }
 }

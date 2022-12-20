@@ -4,27 +4,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-    <c:choose>
-        <c:when test="${not empty queue}">
-            <h1> Queue Name <c:out value="${queue.getName()}" /> </h1>
-            Id <c:out value="${queue.getQueueId()}" />
-            Top count <c:out value="${queue.getTopCount()}" />
-        </c:when>
-        <c:otherwise>
-            <h1> Not found queue with key '<c:out value="${param.key}" />' </h1>
-            <c:if test="${not empty err}">
-                <h2> <c:out value="${err}" /> </h2>
-            </c:if>
-        </c:otherwise>
-    </c:choose>
-    <hr>
+    <head>
+        <link rel="stylesheet" href='/BD1-1/styles.css' type="text/css">
+    </head>
+    <div class="main-container">
+    <h1>Заведение очереди</h1>
     <form action="queue" method="post">
         <div class="form-example">
           <label for="name">Enter name: </label>
           <input type="text" name="name" id="name" required>
         </div>
-        <div class="form-example">
+        <div class="form-submit">
           <input type="submit" value="Create queue">
         </div>
     </form>
+
+    <a href='/BD1-1/dashboard' class="actlink">На главную</a>
+    </div>
 </html>

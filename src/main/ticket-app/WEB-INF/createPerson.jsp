@@ -7,29 +7,27 @@
     <head>
         <link rel="stylesheet" href='/BD1-1/styles.css' type="text/css">
     </head>
+
     <div class="main-container">
-    <h1>Создание тикета</h1>
+    <h1>Регистрация сотрудника</h1>
     <form action="create" method="post">
         <div class="form-example">
-          <label for="description">Enter description: </label>
-          <input type="text" name="description" id="description" required>
+          <label for="fname">First name: </label>
+          <input type="text" name="fname" id="fname" required>
         </div>
         <div class="form-example">
-          <label for="queue">Choose queue: </label>
-          <select name="queue" id="queue">
-            <c:forEach var="queue" items="${queues}">
-                <option value="${queue.getQueueId()}">${queue.getName()}</option>
-            </c:forEach>
-          </select>
+          <label for="lname">First name: </label>
+          <input type="text" name="lname" id="lname" required>
         </div>
         <div class="form-example">
-          <label for="title">Enter title: </label>
-          <input type="text" name="title" id="title" required>
+          <label for="mail">E-mail: </label>
+          <input type="text" name="mail" id="mail">
         </div>
         <div class="form-submit">
-          <input type="submit" value="Create ticket">
+          <input type="submit" value="Create person">
         </div>
     </form>
+
     <a href='/BD1-1/dashboard' class="actlink">На главную</a>
     </div>
 </html>

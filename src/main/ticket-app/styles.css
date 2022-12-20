@@ -1,0 +1,92 @@
+table {
+    border-collapse:collapse;
+    margin: 20px 0px 20px 0px;
+}
+
+body {
+    font-family: Helvetica,Arial,sans-serif
+}
+
+table.dashboard {
+    margin-top: 50px;
+    width: 100%;
+}
+
+a.actlink {
+    display: inline-block;
+    background: #fcbb21;
+    color: #333333;
+    border-radius: 4px;
+    text-decoration: none;
+    padding: 10px 15px;
+    text-align: center;
+    margin: 5px 5px;
+    font-weight: 480;
+    width: auto;
+}
+
+.main-container {
+    width: 80%;
+    margin: auto;
+}
+
+.ticket {
+    color: #666666;
+    text-decoration: none;
+}
+
+.ticket:hover {
+    color: #222222;
+}
+
+tbody>tr:hover {
+    background-color: #eeeeee;
+}
+
+th {
+    font-weight: 700;
+    color: #555555;
+}
+
+th, td{
+    text-align: left;
+    padding: 10px 20px 10px 20px;
+}
+
+.comments-container {
+    background-color: #dae7f7;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+}
+
+.comment-container {
+    background-color: #c8d6e8;
+    border-radius: 2px;
+    padding: 10px;
+    margin-bottom: 3px;
+}
+
+.comment-time, .comment-content{
+    font-weight: 100;
+    font-size: 15px;
+    color: #303030;
+}
+
+.comment-content {
+    display: inline-block;
+    padding: 2px 5px 5px 15px;
+}
+
+.comment-author {
+    display: inline-block;
+    padding: 0px 5px;
+}
+
+.form-example {
+    padding: 5px 0px;
+}
+
+.form-submit {
+
+}

@@ -10,7 +10,7 @@ public class Ticket {
     private int ticketId;
     @NonNull private String title;
     private String description;
-    @NonNull private Status currentStatus;
+    private Status currentStatus;
     private short priority;
     @NonNull private Queue queue;
     private int localTicketId;

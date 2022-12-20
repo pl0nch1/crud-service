@@ -44,6 +44,7 @@ public class CreateTicketServlet extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/createTicket.jsp");
         try {
             List<Queue> queues = queuesDAO.list();
+            logger.info(String.valueOf(queues.size()));
             req.setAttribute("queues", queues);
             dispatcher.forward(req, resp);
         }

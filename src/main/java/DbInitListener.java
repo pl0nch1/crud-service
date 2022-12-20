@@ -35,7 +35,7 @@ public class DbInitListener implements ServletContextListener {
 
         StatusesDAO statusesDAO = new StatusesDAO(ds);
         PersonsDAO personsDAO = new PersonsDAO(ds);
-        QueuesDAO queuesDAO = new QueuesDAO(ds, personsDAO);
+        QueuesDAO queuesDAO = new QueuesDAO(ds);
         TicketsDAO ticketsDAO = new TicketsDAO(ds, queuesDAO, statusesDAO);
         CommentsDAO commentsDAO = new CommentsDAO(ds, personsDAO, ticketsDAO);
         StatusTransitionsDAO statusTransitionsDAO = new StatusTransitionsDAO(ds, ticketsDAO, statusesDAO);
